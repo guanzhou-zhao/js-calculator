@@ -1,4 +1,16 @@
+.calculator {
+  margin-top: 7em;
+}
+.top-text {
+  height: 3em;
+  text-align: center;
+}
+.screen {
+  height: 5em;
+  background-color: #C3C2AB;
+
+}
 .key {
-  border: 1px solid black;
   border-radius: 10%;
+  border-style: outset;
 }
