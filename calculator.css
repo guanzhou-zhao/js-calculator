@@ -8,7 +8,13 @@
 .screen {
   height: 5em;
   background-color: #C3C2AB;
-
+  text-align: right;
+}
+.result {
+  height: 2em;
+}
+.input {
+  height: 1em;
 }
 .key {
   border-radius: 10%;
