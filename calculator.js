@@ -19,10 +19,23 @@ $(document).ready(
     keys = $_keys.map(element_to_key).get()
 
 
-    $_keys.click(key_click_handler)
+    $_keys.on({
+      "click": key_click_handler,
+      "mousedown": key_mousedown_handler,
+      "mouseup": key_mouseup_hander
+    })
   }
 );
-
+var key_mousedown_handler = function(event) {
+  if (event.which == 1) {
+    $(event.target).addClass("mousedown")
+  }
+}
+var key_mouseup_hander = function(event) {
+  if (event.which == 1) {
+    $(event.target).removeClass("mousedown")
+  }
+}
 var key_click_handler = function(event) {
   var $_element = $(event.target);
   var idx_in_keys = parseInt($_element.attr("data_idx"))
