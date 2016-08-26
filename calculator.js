@@ -14,6 +14,7 @@ var operators = "/*-+"
 var prev_key
 var cur_number = ""
 var equation_array = []
+var is_equals_clicked = false
 $(document).ready(
     function() {
         var $_keys = $(".key")
@@ -126,6 +127,7 @@ var sub_complete = function(equation_arr, operator1, operator2) {
     } else {
         result = equation_arr[0];
         console.log(equation_arr)
+        is_equals_clicked = true;
         return;
     }
 }
@@ -139,7 +141,13 @@ var get_key_from_event = function(event) {
 }
 var refresh_screen = function() {
     console.log(equation_array)
-    $(".input").text(equation_array.join(" ") + " " + cur_number)
+    if (is_equals_clicked) {
+      $(".input").text(equation_array.join(" ") + " = " + result)
+    } else {
+      $(".input").text(equation_array.join(" ") + " " + cur_number)
+    }
+
+    $(".result").text(result)
 }
 
 
