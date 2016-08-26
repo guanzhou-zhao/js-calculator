@@ -41,8 +41,11 @@ var key_click_handler = function(event) {
 var update_data = function(key) {
     switch (key.type) {
         case "number":
+            if (equation_array.length == 0 || (equation_array.length > 0 && (typeof equation_array[equation_array.length - 1]) == "object")) {
+              equation_array.push("")
+            }
             if (!(prev_key && prev_key.value == 0 && key.value == 0)) {
-                cur_number += String(key.value);
+                equation_array[equation_array.length - 1] += String(key.value);
             }
             break;
         case "dot":
@@ -55,21 +58,16 @@ var update_data = function(key) {
             }
             break;
         case "operator":
-            if (prev_key && (prev_key.type == "number" || prev_key.type == "dot")) {
-                equation_array.push(cur_number)
-                cur_number = ""
+            if (equation_array.length > 0) {
+              if (typeof equation_array[equation.length - 1] == "object") {
+                equation_array.pop()
                 equation_array.push(key)
-            } else if (prev_key && prev_key.type == "operator") {
-                if ((typeof equation_array[equation_array.length - 1]) != "string") {
-                    equation_array.pop()
-                    equation_array.push(key)
-                }
+              } else {
+                equation_array.push(key)
+              }
             }
             break;
         case "equals":
-            if (cur_number.length != 0) {
-                equation_array.push(cur_number)
-            }
             if (equation_array.length != 0) {
                 compute(equation_array.slice(0, equation_array.length))
             }
@@ -82,7 +80,17 @@ var update_data = function(key) {
               is_equals_clicked = false
             break;
             case "CE":
-
+              if (equation_array.length != 0) {
+                if (typeof equation_array[equation.length - 1] == "object") {
+                  equation_array.pop()
+                } else {
+                  if (equation_array.length > 1) {
+                    equation_array.splice(equation_array.length - 1, 1)
+                  } else {
+                    equation_array.pop()
+                  }
+                }
+              }
             break;
     }
 }
@@ -154,7 +162,7 @@ var refresh_screen = function() {
     if (is_equals_clicked) {
       $(".input").text(equation_array.join(" ") + " = " + result)
     } else {
-      $(".input").text(equation_array.join(" ") + " " + cur_number)
+      $(".input").text(equation_array.join(" "))
     }
 
     $(".result").text(result)
