@@ -41,6 +41,9 @@ var key_click_handler = function(event) {
 var update_data = function(key) {
     switch (key.type) {
         case "number":
+            if (is_equals_clicked) {
+              reset_calculator()
+            }
             if (equation_array.length == 0 || (equation_array.length > 0 && (typeof equation_array[equation_array.length - 1]) == "object")) {
               equation_array.push("")
             }
@@ -49,16 +52,26 @@ var update_data = function(key) {
             }
             break;
         case "dot":
-            if (!cur_number.includes(".")) {
-                if (cur_number.length == 0) {
-                    cur_number += "0."
-                } else {
-                    cur_number += "."
-                }
+            if(is_equals_clicked) {
+              var t = result
+              reset_calculator()
+              equation_array.push(String(t))
+            }
+
+            if (equation_array.length == 0 || (equation_array.length > 0 && (typeof equation_array[equation_array.length - 1]) == "object")) {
+              equation_array.push("0.")
+            } else if (equation_array.length > 0 && (typeof equation_array[equation_array.length - 1]) == "string"){
+              if (!equation_array[equation_array.length - 1].includes(".")) {
+                  if (equation_array[equation_array.length - 1].length == 0) {
+                      equation_array[equation_array.length - 1] += "0."
+                  } else {
+                      equation_array[equation_array.length - 1] += "."
+                  }
+              }
             }
             break;
         case "operator":
-            if (equation_array.length > 0) {
+            if (equation_array.length > 0 && !is_equals_clicked) {
               if (typeof equation_array[equation.length - 1] == "object") {
                 equation_array.pop()
                 equation_array.push(key)
@@ -140,16 +153,13 @@ var sub_complete = function(equation_arr, operator1, operator2) {
                 break;
         }
         equation_arr.splice(index_of_operator - 1, 3, temp_result)
-        console.log(equation_arr)
     } else {
         return
     }
     if (equation_arr.length > 1) {
         sub_complete(equation_arr, operator1, operator2)
-        console.log(equation_arr)
     } else {
         result = equation_arr[0];
-        console.log(equation_arr)
         is_equals_clicked = true;
         return;
     }
@@ -174,7 +184,7 @@ var refresh_screen = function() {
         $(".input").text(equation_array.join(" "))
         $(".result").text(equation_array[equation_array.length - 1])
       }
-
+      //console.log(equation_array)
     }
 
 
