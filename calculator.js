@@ -74,6 +74,16 @@ var update_data = function(key) {
                 compute(equation_array.slice(0, equation_array.length))
             }
             break;
+            case "AC":
+              result = 0
+              prev_key = null
+              cur_number = ""
+              equation_array = []
+              is_equals_clicked = false
+            break;
+            case "CE":
+
+            break;
     }
 }
 
@@ -163,9 +173,9 @@ var element_to_key = function(idx, element) {
     } else if (key.value == ".") {
         key.type = "dot"
     } else if (key.value == "AC") {
-        key.type = "ac"
+        key.type = "AC"
     } else if (key.value == "CE") {
-        key.type = "ce"
+        key.type = "CE"
     } else {
         key.type = "equals"
     }
