@@ -73,13 +73,12 @@ var update_data = function(key) {
             }
             break;
             case "AC":
-              result = 0
-              prev_key = null
-              cur_number = ""
-              equation_array = []
-              is_equals_clicked = false
+              reset_calculator()
             break;
             case "CE":
+              if (is_equals_clicked) {
+                reset_calculator()
+              }
               if (equation_array.length != 0) {
                 if (typeof equation_array[equation.length - 1] == "object") {
                   equation_array.pop()
@@ -94,7 +93,13 @@ var update_data = function(key) {
             break;
     }
 }
-
+var reset_calculator = function()  {
+  result = 0
+  prev_key = null
+  cur_number = ""
+  equation_array = []
+  is_equals_clicked = false
+}
 var compute = function(equation_arr) {
     //remove last operator
     while (equation_arr.length != 0 && (typeof equation_array[equation_array.length - 1]) != "string") {
@@ -158,14 +163,21 @@ var get_key_from_event = function(event) {
     })[0]
 }
 var refresh_screen = function() {
-    console.log(equation_array)
     if (is_equals_clicked) {
       $(".input").text(equation_array.join(" ") + " = " + result)
+      $(".result").text(result)
     } else {
-      $(".input").text(equation_array.join(" "))
+      if (equation_array.length == 0) {
+        $(".input").text(0)
+        $(".result").text(0)
+      } else {
+        $(".input").text(equation_array.join(" "))
+        $(".result").text(equation_array[equation_array.length - 1])
+      }
+
     }
 
-    $(".result").text(result)
+
 }
 
 
