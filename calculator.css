@@ -1,5 +1,8 @@
 .calculator {
   margin-top: 7em;
+  padding: 0 10%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .top-text {
   height: 3em;
@@ -19,7 +22,15 @@
 .key {
   border-radius: 10%;
   border-style: outset;
+  height: 3em;
+  text-align: center;
+  padding-top: 0.5em;
 }
 .mousedown {
   border-style: inset;
+}
+@media all and (min-width: 500px) {
+  .calculator .row {
+    max-width: 450px;
+  }
 }
