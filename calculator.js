@@ -1,11 +1,3 @@
-var ac = "AC"
-var ce = "CE"
-var divide = "/"
-var multiply = "*"
-var subtract = "-"
-var add = "+"
-var equal = "="
-
 var keys
 var equation = ""
 var result = 0
@@ -71,8 +63,13 @@ var update_data = function(key) {
             }
             break;
         case "operator":
-            if (equation_array.length > 0 && !is_equals_clicked) {
-              if (typeof equation_array[equation.length - 1] == "object") {
+            if(is_equals_clicked) {
+              var t = result
+              reset_calculator()
+              equation_array.push(String(t))
+            }
+            if (equation_array.length > 0) {
+              if (typeof equation_array[equation_array.length - 1] == "object") {
                 equation_array.pop()
                 equation_array.push(key)
               } else {
@@ -184,7 +181,7 @@ var refresh_screen = function() {
         $(".input").text(equation_array.join(" "))
         $(".result").text(equation_array[equation_array.length - 1])
       }
-      //console.log(equation_array)
+      console.log(equation_array)
     }
 
 
